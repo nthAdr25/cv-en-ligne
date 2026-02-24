@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV en ligne - [Prénom Nom]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES & RESET (Thème Luxe Noir & Or) --- */
+        :root {
+            --gold: #d4af37; /* Or classique */
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa8c2c;
+            --bg-deep: #050505; /* Noir profond */
+            --bg-card: #121212; /* Gris très sombre pour les cartes */
+            --text-main: #e5e7eb; /* Gris très clair pour la lisibilité */
+            --text-muted: #9ca3af;
+            --border-color: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px; /* Empêche le menu de cacher les titres */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-deep);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 1.2rem;
+        }
+        nav ul { display: flex; list-style: none; gap: 2.5rem; flex-wrap: wrap; justify-content: center; }
+        nav a { 
+            text-decoration: none; 
+            color: var(--text-main); 
+            font-weight: 400; 
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s, text-shadow 0.3s; 
+        }
+        nav a:hover { 
+            color: var(--gold); 
+            text-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- LAYOUT GLOBAL --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 6rem 0; }
+        .section-title {
+            text-align: center; font-size: 2.8rem; color: var(--gold);
+            margin-bottom: 3.5rem; position: relative; font-weight: 500;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 50px; height: 2px;
+            background: var(--gold); margin: 1rem auto 0;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-deep) 100%);
+            color: var(--text-main);
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* PHOTO DE PROFIL - NOUVELLE MÉTHODE */
+        .profile-wrapper {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .profile-img-div {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            /* C'est ici que l'image est définie et centrée */
+            background-image: url('photo_profil.png'); /* L'image de votre dossier */
+            background-size: cover;   /* L'image remplit tout le cercle sans être déformée */
+            background-position: center; /* L'image est centrée */
+            
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .profile-img-div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .hero-content h1 { font-size: 4rem; margin-bottom: 0.5rem; color: var(--gold); font-weight: 700;}
+        .hero-content h2 { font-size: 1.3rem; font-weight: 300; margin-bottom: 1.5rem; color: var(--text-muted); font-family: 'Inter', sans-serif;}
+        .badge-master {
+            display: inline-block; padding: 0.6rem 2rem;
+            background: transparent; border: 1px solid var(--gold); color: var(--gold);
+            border-radius: 2px; text-transform: uppercase; letter-spacing: 2px;
+            font-weight: 400; font-size: 0.85rem; margin-bottom: 2.5rem;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+        .contact-info { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem;}
+        .contact-info span { 
+            color: var(--text-muted); font-size: 0.9rem; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .contact-info i { color: var(--gold); }
+
+        /* --- COMPÉTENCES (SKILLS) --- */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .skill-category { 
+            background: var(--bg-card); padding: 2.5rem; border-radius: 4px; 
+            border: 1px solid var(--border-color); transition: border-color 0.3s;
+        }
+        .skill-category:hover { border-color: rgba(212, 175, 55, 0.5); }
+        .skill-category h3 { margin-bottom: 1.5rem; color: var(--gold); font-size: 1.5rem; font-weight: 500; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .tag { 
+            background: transparent; padding: 0.4rem 1rem; border-radius: 2px; 
+            font-size: 0.85rem; color: var(--text-main); border: 1px solid #444; 
+            transition: all 0.3s;
+        }
+        .tag:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* --- TIMELINE (FORMATION & EXP) --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::before {
+            content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+            width: 1px; background: var(--border-color);
+        }
+        .timeline-item { position: relative; padding-left: 60px; margin-bottom: 3rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: 15px; top: 6px; width: 11px; height: 11px;
+            background: var(--bg-deep); border-radius: 50%; border: 2px solid var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+        .timeline-date { font-weight: 400; color: var(--gold); font-size: 0.95rem; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .timeline-content { 
+            background: var(--bg-card); padding: 2rem; border-radius: 4px; 
+            border: 1px solid var(--border-color);
+        }
+        .timeline-content h3 { color: var(--text-main); font-size: 1.4rem; margin-bottom: 0.3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .timeline-content h4 { font-family: 'Inter', sans-serif; font-weight: 400; color: var(--text-muted); margin-bottom: 1.2rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;}
+
+        /* --- MISE EN ÉVIDENCE (BADGES SPÉCIAUX) --- */
+        .badge-location {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold);
+            color: var(--gold); padding: 0.3rem 0.8rem; border-radius: 4px;
+            font-size: 0.9rem; font-family: 'Inter', sans-serif; font-weight: 600;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        .grades-container {
+            display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;
+        }
+        .grade-badge {
+            background: var(--bg-deep); border: 1px solid var(--gold);
+            padding: 0.6rem 1.2rem; border-radius: 4px;
+            color: var(--text-main); font-size: 0.95rem;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+            font-family: 'Inter', sans-serif;
+        }
+        .grade-badge strong {
+            color: var(--gold); font-size: 1.2rem; margin-left: 5px; font-weight: 700;
+        }
+
+        /* --- PROJETS --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .project-card { 
+            background: var(--bg-card); border-radius: 4px; padding: 2rem; 
+            border: 1px solid var(--border-color); transition: all 0.4s; 
+            position: relative; overflow: hidden;
+        }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-color: #444; }
+        .project-card:hover::before { transform: scaleX(1); }
+        .project-card h3 { margin-bottom: 1rem; color: var(--gold); font-size: 1.3rem; }
+        .project-tools { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        /* --- CENTRES D'INTÉRÊT --- */
+        .interests-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 1.5rem; text-align: center; 
+        }
+        .interest-card { 
+            background: var(--bg-card); border-radius: 4px; padding: 2.5rem 1.5rem; 
+            border: 1px solid var(--border-color); transition: all 0.3s;
+        }
+        .interest-card:hover { 
+            border-color: var(--gold); transform: translateY(-5px); 
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1); 
+        }
+        .interest-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 1.2rem; }
+        .interest-card h3 { color: var(--text-main); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .interest-card p { font-size: 0.9rem; color: var(--text-muted); font-family: 'Inter', sans-serif;}
+
+        /* --- ANIMATIONS --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: #000; color: var(--text-muted); text-align: center; 
+            padding: 3rem 1rem; border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="#hero">Accueil</a></li>
+            <li><a href="#skills">Compétences</a></li>
+            <li><a href="#experience">Expériences</a></li>
+            <li><a href="#education">Formation</a></li>
+            <li><a href="#projects">Projets</a></li>
+            <li><a href="#interests">Intérêts</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-content reveal">
+            
+            <div class="profile-wrapper">
+                <div class="profile-img-div" aria-label="Photo de profil de [Prénom Nom]" role="img"></div>
+            </div>
+
+            <h1>[Prénom Nom]</h1>
+            <h2>Étudiant BUT Informatique 3ème année • En alternance</h2>
+            <div class="badge-master">À la recherche d'un Master pour la rentrée prochaine</div>
+            
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">Parcours Développeur Full Stack - La Rochelle</p>
+            
+            <div class="contact-info">
+                <span><i class="fas fa-envelope"></i> [Votre Mail]</span>
+                <span><i class="fas fa-phone"></i> [Votre Numéro de tel]</span>
+                <span><i class="fas fa-map-marker-alt"></i> [Votre Adresse]</span>
+                <span><i class="fas fa-car"></i> Permis B + Véhicule</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="container">
+        <h2 class="section-title reveal">Profil & Compétences</h2>
+        <div class="skills-grid reveal">
+            <div class="skill-category">
+                <h3><i class="fas fa-laptop-code" style="margin-right: 10px;"></i> Langages & Frameworks</h3>
+                <div class="tags">
+                    <span class="tag">C# / .NET Core</span>
+                    <span class="tag">Angular</span>
+                    <span class="tag">C++ / C</span>
+                    <span class="tag">JavaScript / NodeJS</span>
+                    <span class="tag">PHP / Symfony</span>
+                    <span class="tag">HTML5 / CSS3</span>
+                    <span class="tag">SQL / PL/SQL</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Swift / Flutter</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-tools" style="margin-right: 10px;"></i> Outils & Méthodes</h3>
+                <div class="tags">
+                    <span class="tag">Méthodes Agiles (Scrum)</span>
+                    <span class="tag">Azure DevOps</span>
+                    <span class="tag">GitLab / Git</span>
+                    <span class="tag">Docker</span>
+                    <span class="tag">Visual Studio / VSCode</span>
+                    <span class="tag">SQLServer</span>
+                    <span class="tag">PhPStorm</span>
+                    <span class="tag">Qt Creator</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3><i class="fas fa-user-tie" style="margin-right: 10px;"></i> Savoir-être & Langues</h3>
+                <div class="tags">
+                    <span class="tag">Autonomie</span>
+                    <span class="tag">Rigueur & Analyse</span>
+                    <span class="tag">Travail d'équipe</span>
+                    <span class="tag">Communication</span>
+                    <span class="tag">Français (Maternelle)</span>
+                    <span class="tag">Anglais (A2)</span>
+                    <span class="tag">Espagnol (A2)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="container">
+        <h2 class="section-title reveal">Expériences Professionnelles</h2>
+        <div class="timeline reveal">
+            
+            <div class="timeline-item">
+                <div class="timeline-date">Septembre 2025 - Actuellement</div>
+                <div class="timeline-content">
+                    <h3>Alternant Développeur Full Stack</h3>
+                    <h4>TRIBOFILM - [Ville]</h4>
+                    <p>Développement sur <strong>Mainti4</strong>, logiciel de Gestion de Maintenance Assistée par Ordinateur (GMAO).<br>
+                    • Évolution fonctionnelle et technique, correction de bugs.<br>
+                    • Analyse des besoins clients (fonctionnelle et technique).<br>
+                    • <strong>Projet actuel :</strong> Création d'un module de synchronisation du planning Mainti avec un agenda tiers (Outlook).<br>
+                    • <strong>Méthodologie :</strong> Agile Scrum (Sprints, Backlog, Daily meeting, Sprint review, Rétrospectives).</p>
+                    <div class="tags" style="margin-top: 15px;">
+                        <span class="tag" style="border-color: var(--border-color);">Angular</span> 
+                        <span class="tag" style="border-color: var(--border-color);">.NET / C#</span> 
+                        <span class="tag" style="border-color: var(--border-color);">Azure DevOps</span> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Avril - Juin 2025</div>
+                <div class="timeline-content">
+                    <h3>Stage Développeur C# / ASP.NET <span class="badge-location"><i class="fas fa-map-marker-alt"></i> Montréal, Canada</span></h3>
+                    <h4>Ceritar Technologies Inc</h4>
+                    <p>Participation au projet TMS (Gestion de transport). Modernisation du logiciel historique Logitrack (VB) vers un site web moderne en C#, tout en conservant l'intelligence métier. Simplification de l’expérience utilisateur.</p>
+                    <div class="tags" style="margin-top: 15px;">
+                        <span class="tag" style="border-color: var(--border-color);">C#</span> 
+                        <span class="tag" style="border-color: var(--border-color);">ASP.NET Core</span> 
+                        <span class="tag" style="border-color: var(--border-color);">Razor</span> 
+                        <span class="tag" style="border-color: var(--border-color);">SQLServer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024 / 2025 (Été, vacances, week-ends)</div>
+                <div class="timeline-content">
+                    <h3>Employé Polyvalent</h3>
+                    <h4>Futuroscope - Poitiers</h4>
+                    <p>Caissier, barman, cuisinier et animateur à l’Aérobar. Développement de l'adaptabilité, de la rapidité et du sens du service client.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2022</div>
+                <div class="timeline-content">
+                    <h3>Stage Découverte IT</h3>
+                    <h4>Cabinet d'audit GAROUDA - Poitiers</h4>
+                    <p>Découverte du fonctionnement d’un cabinet d’audit IT. Initiation au paramétrage du progiciel Moovaps.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2020</div>
+                <div class="timeline-content">
+                    <h3>Stages d'observation (3ème)</h3>
+                    <h4>Station Le Lioran & Club Valvert</h4>
+                    <p>Observation des métiers de moniteur de ski et professeur de tennis. Initiation à l'encadrement, l'adaptation aux différents publics et la gestion des plannings.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="education" class="container">
+        <h2 class="section-title reveal">Formation</h2>
+        <div class="timeline reveal">
+            
+            <div class="timeline-item">
+                <div class="timeline-date">2023 - 2026</div>
+                <div class="timeline-content">
+                    <h3>BUT Informatique</h3>
+                    <h4>IUT Informatique - La Rochelle</h4>
+                    <p>Parcours A : Réalisation d’applications, conception développement, validation.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2020 - 2023</div>
+                <div class="timeline-content">
+                    <h3>Baccalauréat Général (Mention BIEN)</h3>
+                    <h4>Lycée Camille Guérin - Poitiers</h4>
+                    <p>Obtention avec d'excellents résultats dans les spécialités scientifiques et techniques :</p>
+                    <div class="grades-container">
+                        <div class="grade-badge">Numérique et Sciences Informatiques : <strong>20/20</strong></div>
+                        <div class="grade-badge">Mathématiques : <strong>19/20</strong></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h2 class="section-title reveal">Projets Universitaires & Personnels</h2>
+        <div class="projects-grid reveal">
+            
+            <div class="project-card">
+                <h3>Acquisition de données Smart Campus</h3>
+                <p>Création d'un système de récolte de données issues de capteurs (ESP-32) pour un campus connecté.</p>
+                <div class="project-tools">
+                    <span class="tag">C</span> <span class="tag">PHP</span> <span class="tag">NodeJS</span> <span class="tag">SQL</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Bataille Navale en réseau</h3>
+                <p>Développement du jeu classique implémentant une architecture client-serveur.</p>
+                <div class="project-tools">
+                    <span class="tag">C</span> <span class="tag">Réseau</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Hnefatafl</h3>
+                <p>Développement du jeu de stratégie viking avec interface graphique.</p>
+                <div class="project-tools">
+                    <span class="tag">C++</span> <span class="tag">Qt Creator</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>PacMan Embarqué</h3>
+                <p>Recréation du jeu PacMan fonctionnant sur un microcontrôleur spécifique.</p>
+                <div class="project-tools">
+                    <span class="tag">C</span> <span class="tag">STM32</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Création d'un jeu rétro</h3>
+                <p>Projet de groupe en méthodes agiles pour concevoir et développer un jeu vidéo rétro de A à Z.</p>
+                <div class="project-tools">
+                    <span class="tag">C++</span> <span class="tag">Qt Creator</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Escape Game</h3>
+                <p>Création d'un jeu d'énigmes interactif jouable sur navigateur internet.</p>
+                <div class="project-tools">
+                    <span class="tag">HTML/CSS</span> <span class="tag">JavaScript</span> <span class="tag">Python</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="interests" class="container" style="margin-bottom: 4rem;">
+        <h2 class="section-title reveal">Centres d'intérêt</h2>
+        <div class="interests-grid reveal">
+            
+            <div class="interest-card">
+                <i class="fa-solid fa-futbol"></i>
+                <h3>Football</h3>
+                <p>11 ans de pratique</p>
+            </div>
+
+            <div class="interest-card">
+                <i class="fa-solid fa-medal"></i>
+                <h3>Tennis</h3>
+                <p>9 ans de pratique</p>
+            </div>
+
+            <div class="interest-card">
+                <i class="fa-solid fa-shuttlecock"></i>
+                <h3>Badminton</h3>
+                <p>Suapse</p>
+            </div>
+
+            <div class="interest-card">
+                <i class="fa-solid fa-person-skiing"></i>
+                <h3>Ski</h3>
+                <p>Loisir</p>
+            </div>
+
+            <div class="interest-card">
+                <i class="fa-solid fa-person-hiking"></i>
+                <h3>Randonnée</h3>
+                <p>Loisir régulier</p>
+            </div>
+
+            <div class="interest-card">
+                <i class="fa-solid fa-guitar"></i>
+                <h3>Guitare</h3>
+                <p>8 ans de pratique</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 - [Prénom Nom] - Développeur Full Stack</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 100;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Déclencher au chargement initial
+        });
+    </script>
+</body>
+</html>
